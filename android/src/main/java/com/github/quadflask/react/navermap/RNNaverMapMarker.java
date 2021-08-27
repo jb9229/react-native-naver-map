@@ -21,8 +21,8 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.Nullable;
 
-import com.airbnb.android.react.maps.TrackableView;
-import com.airbnb.android.react.maps.ViewChangesTracker;
+import com.airbnb.android.react.maps.NMapTrackableView;
+import com.airbnb.android.react.maps.NMapViewChangesTracker;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -42,7 +42,7 @@ import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.Align;
 
-public class RNNaverMapMarker extends ClickableRNNaverMapFeature<Marker> implements TrackableView {
+public class RNNaverMapMarker extends ClickableRNNaverMapFeature<Marker> implements NMapTrackableView {
     private final DraweeHolder<GenericDraweeHierarchy> imageHolder;
     private boolean animated = false;
     private int duration = 500;
@@ -236,7 +236,7 @@ public class RNNaverMapMarker extends ClickableRNNaverMapFeature<Marker> impleme
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }
-        ViewChangesTracker.getInstance().addMarker(this);
+        NMapViewChangesTracker.getInstance().addMarker(this);
         customView = view;
         customView.addOnLayoutChangeListener(onLayoutChangeListener);
         updateCustomView();
@@ -246,7 +246,7 @@ public class RNNaverMapMarker extends ClickableRNNaverMapFeature<Marker> impleme
         super.removeView(view);
         customView.removeOnLayoutChangeListener(onLayoutChangeListener);
         customView = null;
-        ViewChangesTracker.getInstance().removeMarker(this);
+        NMapViewChangesTracker.getInstance().removeMarker(this);
         setOverlayImage(null);
         if (customViewBitmap != null && !customViewBitmap.isRecycled())
             customViewBitmap.recycle();

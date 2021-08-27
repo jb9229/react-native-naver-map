@@ -8,9 +8,9 @@ import android.os.Build;
 import com.facebook.react.uimanager.ViewProps;
 import com.facebook.react.views.view.ReactViewGroup;
 
-public class ViewAttacherGroup extends ReactViewGroup {
+public class NMapViewAttacherGroup extends ReactViewGroup {
 
-    public ViewAttacherGroup(Context context) {
+    public NMapViewAttacherGroup(Context context) {
         super(context);
 
         this.setWillNotDraw(true);

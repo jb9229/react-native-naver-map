@@ -5,16 +5,16 @@ import android.os.Looper;
 
 import java.util.LinkedList;
 
-public class ViewChangesTracker {
+public class NMapViewChangesTracker {
 
-    private static ViewChangesTracker instance;
+    private static NMapViewChangesTracker instance;
     private Handler handler;
-    private LinkedList<TrackableView> markers = new LinkedList<>();
+    private LinkedList<NMapTrackableView> markers = new LinkedList<>();
     private boolean hasScheduledFrame = false;
     private Runnable updateRunnable;
     private final long fps = 2; // FIXME flickering custom view
 
-    private ViewChangesTracker() {
+    private NMapViewChangesTracker() {
         handler = new Handler(Looper.myLooper());
         updateRunnable = () -> {
             hasScheduledFrame = false;
@@ -26,17 +26,17 @@ public class ViewChangesTracker {
         };
     }
 
-    public static ViewChangesTracker getInstance() {
+    public static NMapViewChangesTracker getInstance() {
         if (instance == null) {
-            synchronized (ViewChangesTracker.class) {
-                instance = new ViewChangesTracker();
+            synchronized (NMapViewChangesTracker.class) {
+                instance = new NMapViewChangesTracker();
             }
         }
 
         return instance;
     }
 
-    public void addMarker(TrackableView marker) {
+    public void addMarker(NMapTrackableView marker) {
         markers.add(marker);
 
         if (!hasScheduledFrame) {
@@ -45,18 +45,18 @@ public class ViewChangesTracker {
         }
     }
 
-    public void removeMarker(TrackableView marker) {
+    public void removeMarker(NMapTrackableView marker) {
         markers.remove(marker);
     }
 
-    public boolean containsMarker(TrackableView marker) {
+    public boolean containsMarker(NMapTrackableView marker) {
         return markers.contains(marker);
     }
 
-    private LinkedList<TrackableView> markersToRemove = new LinkedList<>();
+    private LinkedList<NMapTrackableView> markersToRemove = new LinkedList<>();
 
     public void update() {
-        for (TrackableView marker : markers) {
+        for (NMapTrackableView marker : markers) {
             if (!marker.updateCustomForTracking()) {
                 markersToRemove.add(marker);
             } else {

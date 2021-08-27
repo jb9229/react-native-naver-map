@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.airbnb.android.react.maps.SizeReportingShadowNode;
+import com.airbnb.android.react.maps.NMapSizeReportingShadowNode;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -348,7 +348,7 @@ public class RNNaverMapViewManager extends ViewGroupManager<RNNaverMapViewContai
     public LayoutShadowNode createShadowNodeInstance() {
         // A custom shadow node is needed in order to pass back the width/height of the map to the
         // view manager so that it can start applying camera moves with bounds.
-        return new SizeReportingShadowNode();
+        return new NMapSizeReportingShadowNode();
     }
 
     @Override
