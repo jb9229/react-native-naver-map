@@ -166,7 +166,7 @@ public class RNNaverMapMarker extends ClickableRNNaverMapFeature<Marker> impleme
             if (overlayImage != null) {
                 setOverlayImage(overlayImage);
             } else {
-                if (uri.startsWith("http://") || uri.startsWith("https://") || uri.startsWith("file://") || uri.startsWith("asset://")) {
+                if (uri.startsWith("http://") || uri.startsWith("https://") || uri.startsWith("file://") || uri.startsWith("asset://") || uri.startsWith("data:image/")) {
                     ImageRequest imageRequest = ImageRequestBuilder
                             .newBuilderWithSource(Uri.parse(uri))
                             .build();

@@ -1,5 +1,5 @@
 {
-  "name": "@gon-dev/react-native-nmap",
+  "name": "@gbike/react-native-nmap",
   "version": "1.0.0",
   "description": "react-native bridge for naver map",
   "main": "index.js",
