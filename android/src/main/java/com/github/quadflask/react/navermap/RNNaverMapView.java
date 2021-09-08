@@ -4,6 +4,10 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.location.Location;
+import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
@@ -25,7 +29,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RNNaverMapView extends MapView implements OnMapReadyCallback, NaverMap.OnCameraIdleListener, NaverMap.OnMapClickListener, RNNaverMapViewProps {
+public class RNNaverMapView extends MapView implements OnMapReadyCallback, NaverMap.OnLocationChangeListener, NaverMap.OnCameraIdleListener, NaverMap.OnMapClickListener, RNNaverMapViewProps {
     private ThemedReactContext themedReactContext;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
@@ -297,6 +301,17 @@ public class RNNaverMapView extends MapView implements OnMapReadyCallback, Naver
         param.putDouble("longitude", latLng.longitude);
 
         emitEvent("onMapClick", param);
+    }
+
+    @Override
+    public void onLocationChange(@NonNull Location location) {
+        WritableMap param = Arguments.createMap();
+        WritableMap coordinate = new WritableNativeMap();
+        coordinate.putDouble("latitude", location.getLatitude());
+        coordinate.putDouble("longitude", location.getLongitude());
+        param.putMap("coordinate", coordinate);
+
+        emitEvent("onUserLocationChange", param);
     }
 
     @Override

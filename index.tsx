@@ -102,7 +102,7 @@ export interface NaverMapViewProps {
         latitude: number;
         longitude: number;
     }) => void;
-    onTouch?: () => void;
+    onTouch?: (event: { nativeEvent: {animated: boolean, reason: number} }) => void;
     showsMyLocationButton?: boolean;
     compass?: boolean;
     scaleBar?: boolean;

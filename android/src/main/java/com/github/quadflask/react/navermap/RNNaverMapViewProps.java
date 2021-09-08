@@ -11,7 +11,8 @@ public interface RNNaverMapViewProps {
             "onInitialized",
             "onCameraChange",
             "onMapClick",
-            "onTouch"
+            "onTouch",
+            "onUserLocationChange"
     };
 
     void onStop();

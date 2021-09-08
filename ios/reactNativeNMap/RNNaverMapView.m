@@ -24,6 +24,8 @@
 #import "RNNaverMapPolygonOverlay.h"
 
 @interface RNNaverMapView()
+
+@property (nonatomic, assign) BOOL  initialized;
 @end
 
 @implementation RNNaverMapView
@@ -35,6 +37,7 @@
 {
   if ((self = [super initWithFrame:frame])) {
     _reactSubviews = [NSMutableArray new];
+    _initialized = NO;
   }
   return self;
 }
@@ -98,6 +101,20 @@
 }
 
 - (void)mapViewIdle:(nonnull NMFMapView *)mapView {
+  if (!_initialized && ((RNNaverMapView*)self).onInitialized != nil) {
+      if (((RNNaverMapView*)self).onInitialized != nil)
+        ((RNNaverMapView*)self).onInitialized(@{
+          @“latitude” : @(mapView.cameraPosition.target.lat),
+          @“longitude”: @(mapView.cameraPosition.target.lng),
+          @“zoom”     : @(mapView.cameraPosition.zoom)
+        });
+      _initialized = YES;
+  }
+  while ([[UIApplication sharedApplication] isIgnoringInteractionEvents])
+  {
+      [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+  }
+  
   if (((RNNaverMapView*)self).onCameraChange != nil)
     ((RNNaverMapView*)self).onCameraChange(@{
       @"latitude"      : @(mapView.cameraPosition.target.lat),
