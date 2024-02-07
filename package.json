@@ -1,6 +1,6 @@
 {
   "name": "@gbike/react-native-nmap",
-  "version": "1.1.0",
+  "version": "1.2.3",
   "description": "react-native bridge for naver map",
   "main": "index.js",
   "author": "QuadFlask",

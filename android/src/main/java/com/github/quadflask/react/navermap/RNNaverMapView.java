@@ -3,6 +3,7 @@ package com.github.quadflask.react.navermap;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.location.Location;
 import android.os.Build;
@@ -30,18 +31,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RNNaverMapView extends MapView implements OnMapReadyCallback, NaverMap.OnLocationChangeListener, NaverMap.OnCameraIdleListener, NaverMap.OnMapClickListener, RNNaverMapViewProps {
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
     private ThemedReactContext themedReactContext;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
+    private NaverMapSdk naverMapSdk;
     private NMapViewAttacherGroup attacherGroup;
     private long lastTouch = 0;
     private final List<RNNaverMapFeature<?>> features = new ArrayList<>();
 
-    public RNNaverMapView(@NonNull ThemedReactContext themedReactContext, ReactApplicationContext appContext, FusedLocationSource locationSource, NaverMapOptions naverMapOptions, Bundle instanceStateBundle) {
+    public RNNaverMapView(@NonNull ThemedReactContext themedReactContext, ReactApplicationContext appContext, NaverMapOptions naverMapOptions, Bundle instanceStateBundle) {
         super(ReactUtil.getNonBuggyContext(themedReactContext, appContext), naverMapOptions);
         this.themedReactContext = themedReactContext;
-        this.locationSource = locationSource;
+        this.locationSource = new FusedLocationSource(appContext.getCurrentActivity(), LOCATION_PERMISSION_REQUEST_CODE);
         super.onCreate(instanceStateBundle);
+        naverMapSdk = NaverMapSdk.getInstance(appContext);
 //        super.onStart();
         getMapAsync(this);
 
@@ -72,6 +76,7 @@ public class RNNaverMapView extends MapView implements OnMapReadyCallback, Naver
                 lastTouch = System.currentTimeMillis();
             }
         });
+        naverMapSdk.flushCache(() -> Log.i("NaverMap", "Map Cache Clean"));
         onInitialized();
     }
 
